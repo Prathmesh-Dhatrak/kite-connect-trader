@@ -20,10 +20,9 @@ export async function GET() {
     );
 
     return NextResponse.json(profile);
-  } catch (error: unknown) {
-    const err = error as Error;
-    console.error(`[API/USER] [${requestId}] ERROR:`, err.message);
-    console.error(`[API/USER] [${requestId}] Stack trace:`, err.stack);
+  } catch (error: any) {
+    console.error(`[API/USER] [${requestId}] ERROR:`, error.message);
+    console.error(`[API/USER] [${requestId}] Stack trace:`, error.stack);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

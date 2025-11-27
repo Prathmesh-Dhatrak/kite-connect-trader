@@ -37,10 +37,9 @@ export async function GET(request: Request) {
       `[API/QUOTE] [${requestId}] Quotes fetched successfully in ${duration}ms`
     );
     return NextResponse.json(data);
-  } catch (error: unknown) {
-    const err = error as Error;
-    console.error(`[API/QUOTE] [${requestId}] ERROR:`, err.message);
-    console.error(`[API/QUOTE] [${requestId}] Stack trace:`, err.stack);
+  } catch (error: any) {
+    console.error(`[API/QUOTE] [${requestId}] ERROR:`, error.message);
+    console.error(`[API/QUOTE] [${requestId}] Stack trace:`, error.stack);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

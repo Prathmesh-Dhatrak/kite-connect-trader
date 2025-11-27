@@ -63,9 +63,8 @@ export function OrderForm() {
         console.error("[ORDER_FORM] ERROR:", errorMsg);
         setMessage(errorMsg);
       }
-    } catch (error: unknown) {
-      const err = error as Error;
-      const errorMsg = `Failed to place order: ${err.message}`;
+    } catch (error: any) {
+      const errorMsg = `Failed to place order: ${error.message}`;
       console.error("[ORDER_FORM] EXCEPTION:", errorMsg);
       console.error("[ORDER_FORM] Error details:", error);
       setMessage(errorMsg);

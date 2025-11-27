@@ -9,7 +9,8 @@ interface Trade {
   cash_after: number;
   holdings_after: number;
   portfolio_value: number;
-  indicators?: Record<string, number>;
+  short_mavg?: number;
+  long_mavg?: number;
 }
 
 interface BacktestResult {

@@ -7,12 +7,6 @@ export interface SignalResult {
   position: number;
 }
 
-interface Candle {
-  date: string;
-  close: number;
-  [key: string]: unknown;
-}
-
 export class SMACrossoverStrategy {
   private shortWindow: number;
   private longWindow: number;
@@ -22,7 +16,7 @@ export class SMACrossoverStrategy {
     this.longWindow = longWindow;
   }
 
-  generateSignals(data: Candle[]): SignalResult[] {
+  generateSignals(data: any[]): SignalResult[] {
     console.log("[SMA_STRATEGY] Generating signals...");
     console.log("[SMA_STRATEGY] Input data points:", data.length);
     console.log("[SMA_STRATEGY] Short window:", this.shortWindow);

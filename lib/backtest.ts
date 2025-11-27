@@ -1,7 +1,5 @@
 import { getHistoricalData } from "./kite";
-import { strategyRegistry } from "./strategy/registry";
-import { CustomStrategyExecutor } from "./strategy/custom-strategy";
-import { CustomStrategy } from "./custom-strategy-storage";
+import { SMACrossoverStrategy } from "./strategy/sma";
 
 interface Trade {
   date: Date;
@@ -12,7 +10,8 @@ interface Trade {
   cash_after: number;
   holdings_after: number;
   portfolio_value: number;
-  indicators?: Record<string, number>;
+  short_mavg?: number;
+  long_mavg?: number;
 }
 
 interface BacktestMetrics {
@@ -39,10 +38,9 @@ export async function runBacktest(
   from_date: string,
   to_date: string,
   interval: string,
-  strategy_id: string = "sma_crossover",
-  strategy_params: Record<string, number> = {},
+  short_window: number,
+  long_window: number,
   initial_capital: number = 100000,
-  custom_strategy?: CustomStrategy, // Optional custom strategy definition
   position_size_percentage: number = 95, // Use 95% of available cash
   fee_percentage: number = 0.03 // 0.03% per trade (brokerage + taxes)
 ) {
@@ -51,8 +49,8 @@ export async function runBacktest(
   console.log("[BACKTEST] - Instrument Token:", instrument_token);
   console.log("[BACKTEST] - Date Range:", from_date, "to", to_date);
   console.log("[BACKTEST] - Interval:", interval);
-  console.log("[BACKTEST] - Strategy:", strategy_id);
-  console.log("[BACKTEST] - Strategy Params:", JSON.stringify(strategy_params));
+  console.log("[BACKTEST] - Short Window:", short_window);
+  console.log("[BACKTEST] - Long Window:", long_window);
   console.log(
     "[BACKTEST] - Initial Capital: ₹",
     initial_capital.toLocaleString()
@@ -82,24 +80,9 @@ export async function runBacktest(
   );
 
   // 2. Apply Strategy
-  console.log("[BACKTEST] Step 2: Applying Strategy...");
-
-  // Get strategy - either from registry or create custom strategy executor
-  let strategy;
-  if (custom_strategy) {
-    console.log("[BACKTEST] Using custom strategy:", custom_strategy.name);
-    strategy = new CustomStrategyExecutor(custom_strategy);
-  } else {
-    strategy = strategyRegistry.get(strategy_id);
-    if (!strategy) {
-      throw new Error(`Strategy not found: ${strategy_id}`);
-    }
-  }
-
-  const strategyConfig = strategy.getConfig();
-  console.log("[BACKTEST] Strategy:", strategyConfig.name);
-
-  const signals = strategy.generateSignals(historicalData, strategy_params);
+  console.log("[BACKTEST] Step 2: Applying SMA Crossover Strategy...");
+  const strategy = new SMACrossoverStrategy(short_window, long_window);
+  const signals = strategy.generateSignals(historicalData);
   console.log("[BACKTEST] Generated", signals.length, "signals");
 
   // 3. Calculate Metrics with Dynamic Position Sizing
@@ -167,7 +150,8 @@ export async function runBacktest(
             cash_after: cash,
             holdings_after: holdings,
             portfolio_value: portfolioValueAfter,
-            indicators: point.indicators,
+            short_mavg: point.short_mavg,
+            long_mavg: point.long_mavg,
           });
 
           console.log(
@@ -222,7 +206,8 @@ export async function runBacktest(
         cash_after: cash,
         holdings_after: holdings,
         portfolio_value: portfolioValueAfter,
-        indicators: point.indicators,
+        short_mavg: point.short_mavg,
+        long_mavg: point.long_mavg,
       });
 
       console.log(
