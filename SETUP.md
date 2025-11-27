@@ -1,6 +1,7 @@
 # Quick Setup Guide
 
 ## Prerequisites
+
 - Node.js 20+ installed
 - pnpm package manager
 - Kite Connect API account
@@ -8,12 +9,14 @@
 ## Setup Steps
 
 ### 1. Clone and Install
+
 ```bash
 cd kite-connect-trader
 pnpm install
 ```
 
 ### 2. Configure Environment Variables
+
 ```bash
 # Copy the example file
 cp .env.example .env
@@ -25,6 +28,7 @@ KITE_ACCESS_TOKEN=your_actual_access_token
 ```
 
 ### 3. Run Development Server
+
 ```bash
 pnpm dev
 ```
@@ -42,22 +46,26 @@ Open [http://localhost:3000](http://localhost:3000)
 ## Features
 
 ### Backtest Tab
+
 - Test SMA Crossover strategy on historical data
 - Configure instrument, date range, and SMA windows
 - View detailed trade log and performance metrics
 
 ### Trade Tab
+
 - Place buy/sell orders
 - Support for multiple exchanges (NSE, BSE)
 - Market and limit order types
 
 ### Profile Tab
+
 - View your Kite Connect profile
 - Check account details
 
 ## Monitoring Logs
 
 ### Browser Console (Client Logs):
+
 ```
 Open DevTools (F12) → Console tab
 Look for logs prefixed with:
@@ -68,6 +76,7 @@ Look for logs prefixed with:
 ```
 
 ### Terminal (Server Logs):
+
 ```
 Server logs appear in terminal where you ran 'pnpm dev'
 Look for logs prefixed with:
@@ -83,21 +92,25 @@ Look for logs prefixed with:
 ## Common Issues
 
 ### "KITE_API_KEY is missing"
+
 - Make sure `.env` file exists
 - Check that environment variables are set correctly
 - Restart the dev server after adding .env
 
 ### "No data found for the given range"
+
 - Check if the date range is valid
 - Ensure instrument token is correct
 - Verify your Kite API access
 
 ### API Errors
+
 - Check browser console for detailed error logs
 - Check terminal for server-side error details
 - Verify Kite Connect API status
 
 ## Project Structure
+
 ```
 kite-connect-trader/
 ├── app/

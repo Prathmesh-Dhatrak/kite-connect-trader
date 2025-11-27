@@ -1,16 +1,19 @@
 # Logging Implementation Summary
 
 ## Overview
+
 Comprehensive logging has been added throughout the entire application to enable easy debugging and issue tracking.
 
 ## Logging Format
 
 All logs follow a consistent format:
+
 ```
 [MODULE] [REQUEST_ID] Message: Details
 ```
 
 ### Log Prefixes:
+
 - `[KITE]` - Kite Connect API library operations
 - `[BACKTEST]` - Backtesting engine operations
 - `[SMA_STRATEGY]` - SMA strategy calculations
@@ -28,6 +31,7 @@ All logs follow a consistent format:
 ### 1. Kite Connect Library (`lib/kite.ts`)
 
 **Initialization:**
+
 ```
 [KITE] Initializing Kite Connect client...
 [KITE] API Key present: true
@@ -37,6 +41,7 @@ All logs follow a consistent format:
 ```
 
 **API Calls:**
+
 ```
 [KITE] getQuote called with instruments: ["NSE:INFY"]
 [KITE] getQuote successful. Duration: 234ms Instruments count: 1
@@ -58,6 +63,7 @@ All logs follow a consistent format:
 ```
 
 **Errors:**
+
 ```
 [KITE] getQuote ERROR: Error message here
 [KITE] Error details: { full error object }
@@ -66,6 +72,7 @@ All logs follow a consistent format:
 ### 2. Backtest Engine (`lib/backtest.ts`)
 
 **Execution Flow:**
+
 ```
 [BACKTEST] ========== Starting Backtest ==========
 [BACKTEST] Parameters:
@@ -109,6 +116,7 @@ All logs follow a consistent format:
 ### 3. SMA Strategy (`lib/strategy/sma.ts`)
 
 **Signal Generation:**
+
 ```
 [SMA_STRATEGY] Generating signals...
 [SMA_STRATEGY] Input data points: 247
@@ -140,6 +148,7 @@ All logs follow a consistent format:
 ### 4. API Routes
 
 **Backtest Route:**
+
 ```
 [API/BACKTEST] [abc123] POST request received
 [API/BACKTEST] [abc123] Request body: { ... }
@@ -149,6 +158,7 @@ All logs follow a consistent format:
 ```
 
 **Quote Route:**
+
 ```
 [API/QUOTE] [def456] GET request received
 [API/QUOTE] [def456] Instruments parameter: NSE:INFY,NSE:TCS
@@ -158,6 +168,7 @@ All logs follow a consistent format:
 ```
 
 **Order Route:**
+
 ```
 [API/ORDER] [ghi789] POST request received
 [API/ORDER] [ghi789] Request body: { ... }
@@ -168,6 +179,7 @@ All logs follow a consistent format:
 ```
 
 **User Route:**
+
 ```
 [API/USER] [jkl012] GET request received
 [API/USER] [jkl012] Fetching user profile...
@@ -243,7 +255,9 @@ All errors are logged with full context:
 ## How to Use Logs for Debugging
 
 ### 1. Track Request Flow
+
 Use request IDs to follow a request through the entire stack:
+
 ```
 [API/BACKTEST] [abc123] POST request received
 [BACKTEST] ========== Starting Backtest ==========
@@ -253,14 +267,18 @@ Use request IDs to follow a request through the entire stack:
 ```
 
 ### 2. Identify Performance Issues
+
 Look for duration logs:
+
 ```
 [KITE] getHistoricalData successful. Duration: 567ms
 [API/BACKTEST] [abc123] Backtest completed successfully in 1234ms
 ```
 
 ### 3. Debug User Actions
+
 Follow component interactions:
+
 ```
 [HOME] Tab changed to: trade
 [ORDER_FORM] Component rendered
@@ -269,7 +287,9 @@ Follow component interactions:
 ```
 
 ### 4. Find Error Sources
+
 Error logs include full context:
+
 ```
 [API/ORDER] [ghi789] ERROR: Missing tradingsymbol
 [API/ORDER] [ghi789] Stack trace: ...
@@ -278,16 +298,19 @@ Error logs include full context:
 ## Viewing Logs
 
 ### Development (Browser Console):
+
 - Open DevTools (F12)
 - Go to Console tab
 - Filter by log prefix (e.g., `[API/` or `[KITE]`)
 
 ### Development (Terminal):
+
 - Run `npm run dev`
 - Server logs appear in terminal
 - Use `grep` to filter: `npm run dev | grep "[BACKTEST]"`
 
 ### Production:
+
 - Configure logging service (e.g., Winston, Pino)
 - Send logs to centralized logging (e.g., CloudWatch, Datadog)
 - Set up alerts for error patterns
@@ -295,6 +318,7 @@ Error logs include full context:
 ## Log Levels (Future Enhancement)
 
 Consider implementing log levels:
+
 - `DEBUG` - Detailed debugging information
 - `INFO` - General informational messages (current implementation)
 - `WARN` - Warning messages for potential issues
@@ -317,17 +341,20 @@ Consider implementing log levels:
 All files have been updated with comprehensive logging:
 
 ### Core Library:
+
 - ✅ `lib/kite.ts`
 - ✅ `lib/backtest.ts`
 - ✅ `lib/strategy/sma.ts`
 
 ### API Routes:
+
 - ✅ `app/api/backtest/route.ts`
 - ✅ `app/api/market-data/quote/route.ts`
 - ✅ `app/api/order/route.ts`
 - ✅ `app/api/user/route.ts`
 
 ### Components:
+
 - ✅ `components/backtest-form.tsx`
 - ✅ `components/order-form.tsx`
 - ✅ `components/user-profile.tsx`
@@ -336,6 +363,7 @@ All files have been updated with comprehensive logging:
 ## Summary
 
 With these logging additions:
+
 - ✅ Every major operation is logged
 - ✅ Request flow can be traced end-to-end
 - ✅ Performance can be measured
