@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "clsx": "^2.1.1",
+    "dotenv": "^17.2.3",
     "kiteconnect": "^5.1.0",
     "lucide-react": "^0.555.0",
     "next": "16.0.4",
@@ -26,6 +27,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.0.4",
     "tailwindcss": "^4",
+    "tsx": "^4.20.6",
     "typescript": "^5"
   }
 }
