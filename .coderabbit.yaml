@@ -1,7 +1,7 @@
 # .coderabbit.yaml
 reviews:
-  # Options: "concise", "assertive", "friendly"
-  tone: "friendly"
+  # Options: "chill", "assertive"
+  profile: "chill"
   # Enable/Disable the high-level summary of changes
   high_level_summary: true
   # Enable/Disable line-by-line code suggestions
