@@ -41,8 +41,9 @@ export async function getQuote(instruments: string[]) {
       instruments.length
     );
     return result;
-  } catch (error: any) {
-    console.error("[KITE] getQuote ERROR:", error.message);
+  } catch (error: unknown) {
+    const err = error as Error;
+    console.error("[KITE] getQuote ERROR:", err.message);
     console.error("[KITE] Error details:", JSON.stringify(error, null, 2));
     throw error;
   }
@@ -62,7 +63,7 @@ export async function getHistoricalData(
 
   try {
     const startTime = Date.now();
-    // @ts-ignore
+    // @ts-expect-error - KiteConnect types are incomplete
     const result = await kite.getHistoricalData(
       instrument_token,
       interval,
@@ -77,8 +78,9 @@ export async function getHistoricalData(
       result?.length || 0
     );
     return result;
-  } catch (error: any) {
-    console.error("[KITE] getHistoricalData ERROR:", error.message);
+  } catch (error: unknown) {
+    const err = error as Error;
+    console.error("[KITE] getHistoricalData ERROR:", err.message);
     console.error("[KITE] Error details:", JSON.stringify(error, null, 2));
     throw error;
   }
@@ -93,19 +95,20 @@ export async function getUserProfile() {
     console.log("[KITE] getUserProfile successful. Duration:", duration + "ms");
     console.log("[KITE] User:", result.user_name, "ID:", result.user_id);
     return result;
-  } catch (error: any) {
-    console.error("[KITE] getUserProfile ERROR:", error.message);
+  } catch (error: unknown) {
+    const err = error as Error;
+    console.error("[KITE] getUserProfile ERROR:", err.message);
     console.error("[KITE] Error details:", JSON.stringify(error, null, 2));
     throw error;
   }
 }
 
-export async function placeOrder(params: any) {
+export async function placeOrder(params: Record<string, unknown>) {
   console.log("[KITE] placeOrder called");
   console.log("[KITE] Order params:", JSON.stringify(params, null, 2));
   try {
     const startTime = Date.now();
-    const result = await kite.placeOrder(params.variety, params);
+    const result = await kite.placeOrder(params.variety as string, params);
     const duration = Date.now() - startTime;
     console.log(
       "[KITE] placeOrder successful. Duration:",
@@ -114,8 +117,9 @@ export async function placeOrder(params: any) {
       result
     );
     return result;
-  } catch (error: any) {
-    console.error("[KITE] placeOrder ERROR:", error.message);
+  } catch (error: unknown) {
+    const err = error as Error;
+    console.error("[KITE] placeOrder ERROR:", err.message);
     console.error("[KITE] Error details:", JSON.stringify(error, null, 2));
     throw error;
   }
