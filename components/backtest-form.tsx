@@ -16,6 +16,7 @@ export function BacktestForm({ onRunBacktest, isLoading }: BacktestFormProps) {
     from_date: "2023-01-01",
     to_date: "2023-12-31",
     interval: "day",
+    initial_capital: 500000,
     short_window: 20,
     long_window: 50,
   });
@@ -36,6 +37,7 @@ export function BacktestForm({ onRunBacktest, isLoading }: BacktestFormProps) {
 
     const backtestData = {
       ...formData,
+      initial_capital: Number(formData.initial_capital),
       short_window: Number(formData.short_window),
       long_window: Number(formData.long_window),
     };
@@ -109,6 +111,24 @@ export function BacktestForm({ onRunBacktest, isLoading }: BacktestFormProps) {
           <option value="15minute">15 Minute</option>
           <option value="5minute">5 Minute</option>
         </select>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          Initial Capital (₹)
+        </label>
+        <input
+          type="number"
+          name="initial_capital"
+          value={formData.initial_capital}
+          onChange={handleChange}
+          min="10000"
+          step="10000"
+          className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+        />
+        <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+          Recommended: ₹500,000 or more for diverse strategies
+        </p>
       </div>
 
       <div className="grid grid-cols-2 gap-4">

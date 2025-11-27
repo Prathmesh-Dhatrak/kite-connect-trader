@@ -17,6 +17,7 @@ export async function POST(request: Request) {
       from_date,
       to_date,
       interval,
+      initial_capital,
       short_window,
       long_window,
     } = body;
@@ -59,7 +60,8 @@ export async function POST(request: Request) {
       to_date,
       interval,
       short_window,
-      long_window
+      long_window,
+      initial_capital
     );
 
     const duration = Date.now() - startTime;
