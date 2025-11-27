@@ -1,0 +1,15 @@
+# .coderabbit.yaml
+reviews:
+  # Options: "concise", "assertive", "friendly"
+  tone: "friendly"
+  # Enable/Disable the high-level summary of changes
+  high_level_summary: true
+  # Enable/Disable line-by-line code suggestions
+  review_status: true
+  # Files to ignore (e.g., lock files, minified code)
+  ignore:
+    - "**/*.lock"
+    - "dist/**"
+    - "node_modules/**"
+    - "*.min.js"
+    - "*.min.css"
