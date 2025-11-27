@@ -64,9 +64,10 @@ export async function POST(request: Request) {
     console.log(`[API/ORDER] [${requestId}] Order ID:`, orderId);
 
     return NextResponse.json({ status: "success", order_id: orderId });
-  } catch (error: any) {
-    console.error(`[API/ORDER] [${requestId}] ERROR:`, error.message);
-    console.error(`[API/ORDER] [${requestId}] Stack trace:`, error.stack);
+  } catch (error: unknown) {
+    const err = error as Error;
+    console.error(`[API/ORDER] [${requestId}] ERROR:`, err.message);
+    console.error(`[API/ORDER] [${requestId}] Stack trace:`, err.stack);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

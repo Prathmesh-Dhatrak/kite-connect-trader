@@ -18,8 +18,9 @@ export async function POST(request: Request) {
       to_date,
       interval,
       initial_capital,
-      short_window,
-      long_window,
+      strategy_id,
+      strategy_params,
+      custom_strategy, // For custom strategies, pass the full definition
     } = body;
 
     // Validate required parameters
@@ -41,12 +42,10 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-    if (!short_window || !long_window) {
-      console.error(
-        `[API/BACKTEST] [${requestId}] ERROR: Missing window parameters`
-      );
+    if (!strategy_id) {
+      console.error(`[API/BACKTEST] [${requestId}] ERROR: Missing strategy_id`);
       return NextResponse.json(
-        { error: "short_window and long_window are required" },
+        { error: "strategy_id is required" },
         { status: 400 }
       );
     }
@@ -59,9 +58,10 @@ export async function POST(request: Request) {
       from_date,
       to_date,
       interval,
-      short_window,
-      long_window,
-      initial_capital
+      strategy_id,
+      strategy_params || {},
+      initial_capital,
+      custom_strategy // Pass custom strategy definition if provided
     );
 
     const duration = Date.now() - startTime;
@@ -75,9 +75,10 @@ export async function POST(request: Request) {
     );
 
     return NextResponse.json(result);
-  } catch (error: any) {
-    console.error(`[API/BACKTEST] [${requestId}] ERROR:`, error.message);
-    console.error(`[API/BACKTEST] [${requestId}] Stack trace:`, error.stack);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    const err = error as Error;
+    console.error(`[API/BACKTEST] [${requestId}] ERROR:`, err.message);
+    console.error(`[API/BACKTEST] [${requestId}] Stack trace:`, err.stack);
+    return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }

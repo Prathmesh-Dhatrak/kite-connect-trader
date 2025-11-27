@@ -2,10 +2,17 @@
 
 import { useEffect, useState } from "react";
 
+interface UserProfileData {
+  user_name: string;
+  user_id: string;
+  email: string;
+  broker: string;
+}
+
 export function UserProfile() {
   console.log("[USER_PROFILE] Component rendered");
 
-  const [profile, setProfile] = useState<any>(null);
+  const [profile, setProfile] = useState<UserProfileData | null>(null);
   const [error, setError] = useState("");
 
   useEffect(() => {

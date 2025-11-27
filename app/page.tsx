@@ -6,19 +6,21 @@ import { ResultsView } from "@/components/results-view";
 import { OrderForm } from "@/components/order-form";
 import { UserProfile } from "@/components/user-profile";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { StrategyBuilder } from "@/components/strategy-builder";
+import { StrategyList } from "@/components/strategy-list";
 
 export default function Home() {
   console.log("[HOME] Component rendered");
 
-  const [activeTab, setActiveTab] = useState<"backtest" | "trade" | "profile">(
-    "backtest"
-  );
+  const [activeTab, setActiveTab] = useState<
+    "backtest" | "strategies" | "trade" | "profile"
+  >("backtest");
   const [backtestResults, setBacktestResults] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   console.log("[HOME] Active tab:", activeTab, "isLoading:", isLoading);
 
-  const handleRunBacktest = async (data: any) => {
+  const handleRunBacktest = async (data: unknown) => {
     console.log("[HOME] handleRunBacktest called with data:", data);
     setIsLoading(true);
     setBacktestResults(null);
@@ -44,8 +46,9 @@ export default function Home() {
         console.error("[HOME] Backtest failed:", errorMsg);
         alert(errorMsg);
       }
-    } catch (error: any) {
-      const errorMsg = "Failed to run backtest: " + error.message;
+    } catch (error: unknown) {
+      const err = error as Error;
+      const errorMsg = "Failed to run backtest: " + err.message;
       console.error("[HOME] Backtest exception:", errorMsg);
       console.error("[HOME] Error details:", error);
       alert(errorMsg);
@@ -68,7 +71,7 @@ export default function Home() {
         </div>
 
         <div className="flex justify-center mb-8">
-          <div className="bg-white rounded-lg shadow p-1 inline-flex">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-1 inline-flex">
             <button
               onClick={() => {
                 console.log("[HOME] Tab changed to: backtest");
@@ -76,11 +79,24 @@ export default function Home() {
               }}
               className={`px-4 py-2 rounded-md text-sm font-medium ${
                 activeTab === "backtest"
-                  ? "bg-indigo-100 text-indigo-700"
-                  : "text-gray-500 hover:text-gray-700"
+                  ? "bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-200"
+                  : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
               }`}
             >
               Backtest
+            </button>
+            <button
+              onClick={() => {
+                console.log("[HOME] Tab changed to: strategies");
+                setActiveTab("strategies");
+              }}
+              className={`px-4 py-2 rounded-md text-sm font-medium ${
+                activeTab === "strategies"
+                  ? "bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-200"
+                  : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+              }`}
+            >
+              Strategies
             </button>
             <button
               onClick={() => {
@@ -89,8 +105,8 @@ export default function Home() {
               }}
               className={`px-4 py-2 rounded-md text-sm font-medium ${
                 activeTab === "trade"
-                  ? "bg-indigo-100 text-indigo-700"
-                  : "text-gray-500 hover:text-gray-700"
+                  ? "bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-200"
+                  : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
               }`}
             >
               Trade
@@ -102,8 +118,8 @@ export default function Home() {
               }}
               className={`px-4 py-2 rounded-md text-sm font-medium ${
                 activeTab === "profile"
-                  ? "bg-indigo-100 text-indigo-700"
-                  : "text-gray-500 hover:text-gray-700"
+                  ? "bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-200"
+                  : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
               }`}
             >
               Profile
@@ -120,6 +136,23 @@ export default function Home() {
               />
               <ResultsView results={backtestResults} />
             </>
+          )}
+
+          {activeTab === "strategies" && (
+            <div className="space-y-8">
+              <div>
+                <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
+                  Create Custom Strategy
+                </h2>
+                <StrategyBuilder />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
+                  Saved Strategies
+                </h2>
+                <StrategyList />
+              </div>
+            </div>
           )}
 
           {activeTab === "trade" && <OrderForm />}
