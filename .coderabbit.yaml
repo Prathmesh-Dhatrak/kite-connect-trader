@@ -1,0 +1,15 @@
+# .coderabbit.yaml
+reviews:
+  # Options: "chill", "assertive"
+  profile: "chill"
+  # Enable/Disable the high-level summary of changes
+  high_level_summary: true
+  # Enable/Disable line-by-line code suggestions
+  review_status: true
+  # Files to ignore (e.g., lock files, minified code)
+  path_filters:
+    - "**/*.lock"
+    - "dist/**"
+    - "node_modules/**"
+    - "*.min.js"
+    - "*.min.css"
