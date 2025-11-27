@@ -7,7 +7,7 @@ reviews:
   # Enable/Disable line-by-line code suggestions
   review_status: true
   # Files to ignore (e.g., lock files, minified code)
-  ignore:
+  path_filters:
     - "**/*.lock"
     - "dist/**"
     - "node_modules/**"
