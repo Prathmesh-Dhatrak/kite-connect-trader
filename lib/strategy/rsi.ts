@@ -21,7 +21,7 @@ export class RSIStrategy extends BaseStrategy {
           name: "oversold",
           label: "Oversold Level",
           type: "number",
-          default: 30,
+          default: 35,
           min: 10,
           max: 40,
           step: 1,
@@ -31,7 +31,7 @@ export class RSIStrategy extends BaseStrategy {
           name: "overbought",
           label: "Overbought Level",
           type: "number",
-          default: 70,
+          default: 65,
           min: 60,
           max: 90,
           step: 1,
@@ -47,8 +47,8 @@ export class RSIStrategy extends BaseStrategy {
     params: Record<string, number | string>
   ): SignalResult[] {
     const rsiPeriod = params.rsi_period || 14;
-    const oversold = params.oversold || 30;
-    const overbought = params.overbought || 70;
+    const oversold = params.oversold || 35;
+    const overbought = params.overbought || 65;
 
     console.log("[RSI_STRATEGY] Generating signals...");
     console.log("[RSI_STRATEGY] RSI Period:", rsiPeriod);

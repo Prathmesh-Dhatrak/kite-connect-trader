@@ -39,8 +39,8 @@ export function BacktestForm({ onRunBacktest, isLoading }: BacktestFormProps) {
   );
   const [formData, setFormData] = useState({
     instrument_token: "408065",
-    from_date: "2023-01-01",
-    to_date: "2023-12-31",
+    from_date: "2024-01-01",
+    to_date: "2024-12-31",
     interval: "day",
     initial_capital: 500000,
     strategy_id: "sma_crossover",
