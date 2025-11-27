@@ -11,7 +11,7 @@ export class SMACrossoverStrategy extends BaseStrategy {
           name: "short_window",
           label: "Short Window",
           type: "number",
-          default: 20,
+          default: 10,
           min: 5,
           max: 100,
           step: 1,
@@ -21,7 +21,7 @@ export class SMACrossoverStrategy extends BaseStrategy {
           name: "long_window",
           label: "Long Window",
           type: "number",
-          default: 50,
+          default: 30,
           min: 20,
           max: 200,
           step: 1,
@@ -36,8 +36,8 @@ export class SMACrossoverStrategy extends BaseStrategy {
     data: Candle[],
     params: Record<string, number | string>
   ): SignalResult[] {
-    const shortWindow = params.short_window || 20;
-    const longWindow = params.long_window || 50;
+    const shortWindow = params.short_window || 10;
+    const longWindow = params.long_window || 30;
 
     console.log("[SMA_STRATEGY] Generating signals...");
     console.log("[SMA_STRATEGY] Short window:", shortWindow);

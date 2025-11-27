@@ -11,20 +11,20 @@ export class BollingerBandsStrategy extends BaseStrategy {
           name: "period",
           label: "Period",
           type: "number",
-          default: 20,
+          default: 15,
           min: 10,
           max: 50,
           step: 1,
-          description: "Moving average period",
+          description: "Period for moving average and standard deviation",
         },
         {
           name: "std_dev",
-          label: "Standard Deviations",
+          label: "Standard Deviation",
           type: "number",
-          default: 2,
+          default: 1.8,
           min: 1,
           max: 3,
-          step: 0.5,
+          step: 0.1,
           description: "Number of standard deviations for bands",
         },
       ],
@@ -36,8 +36,8 @@ export class BollingerBandsStrategy extends BaseStrategy {
     data: Candle[],
     params: Record<string, number>
   ): SignalResult[] {
-    const period = params.period || 20;
-    const stdDev = params.std_dev || 2;
+    const period = params.period || 15;
+    const stdDev = params.std_dev || 1.8;
 
     console.log("[BB_STRATEGY] Generating signals...");
     console.log("[BB_STRATEGY] Period:", period);

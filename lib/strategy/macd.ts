@@ -46,9 +46,9 @@ export class MACDStrategy extends BaseStrategy {
     data: Candle[],
     params: Record<string, number>
   ): SignalResult[] {
-    const fastPeriod = params.fast_period || 12;
-    const slowPeriod = params.slow_period || 26;
-    const signalPeriod = params.signal_period || 9;
+    const fastPeriod = params.fast_period || 8;
+    const slowPeriod = params.slow_period || 21;
+    const signalPeriod = params.signal_period || 5;
 
     console.log("[MACD_STRATEGY] Generating signals...");
     console.log("[MACD_STRATEGY] Fast:", fastPeriod);
